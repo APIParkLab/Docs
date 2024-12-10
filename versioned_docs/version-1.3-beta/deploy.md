@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -233,6 +233,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass {REDIS_PWD}"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
   apipark-apinto:
@@ -291,7 +399,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -339,6 +447,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass 123456"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
   apipark-apinto:
@@ -413,7 +629,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -463,6 +679,114 @@ services:
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass {REDIS_PWD}"
     networks:
       - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - apipark
 networks:
   apipark:
     driver: bridge
@@ -502,7 +826,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -550,6 +874,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass 123456"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
 networks:

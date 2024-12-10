@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -199,15 +199,15 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD={MYSQL_PWD}
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql port
+      - MYSQL_PORT=3306                 #mysql端口
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # Directory for placing logs
-      - ERROR_FILE_NAME=error.log          # Error log file name
-      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. If unspecified or invalid, default is info
-      - ERROR_EXPIRE=7d                    # Error log expiration time, default is in days, d|days, h|hours. Invalid configuration defaults to 7d
-      - ERROR_PERIOD=day                   # Error log rotation period, supports only day, hour
-      - REDIS_ADDR=apipark-redis:6379      # Redis cluster address, separated by commas
-      - REDIS_PWD={REDIS_PWD}              # Redis password
+      - ERROR_DIR=work/logs  # 日志放置目录
+      - ERROR_FILE_NAME=error.log          # 错误日志文件名
+      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
+      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
+      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
+      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
+      - REDIS_PWD={REDIS_PWD}                         # Redis密码
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
   influxdb2:
     image: influxdb:2.6
@@ -233,6 +233,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass {REDIS_PWD}"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
   apipark-apinto:
@@ -291,7 +399,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -305,15 +413,15 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD=123456
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql port
+      - MYSQL_PORT=3306                 #mysql端口
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # Directory for placing logs
-      - ERROR_FILE_NAME=error.log          # Error log file name
-      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. If unspecified or invalid, default is info
-      - ERROR_EXPIRE=7d                    # Error log expiration time, default is in days, d|days, h|hours. Invalid configuration defaults to 7d
-      - ERROR_PERIOD=day                   # Error log rotation period, supports only day, hour
-      - REDIS_ADDR=apipark-redis:6379      # Redis cluster address, separated by commas
-      - REDIS_PWD=123456                   # Redis password
+      - ERROR_DIR=work/logs  # 日志放置目录
+      - ERROR_FILE_NAME=error.log          # 错误日志文件名
+      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
+      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
+      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
+      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
+      - REDIS_PWD=123456                         # Redis密码
       - ADMIN_PASSWORD=12345678
   influxdb2:
     image: influxdb:2.6
@@ -339,6 +447,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass 123456"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
   apipark-apinto:
@@ -412,7 +628,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.3.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -426,15 +642,15 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD={MYSQL_PWD}
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql port
+      - MYSQL_PORT=3306                 #mysql端口
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # Directory for placing logs
-      - ERROR_FILE_NAME=error.log          # Error log file name
-      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. If unspecified or invalid, default is info
-      - ERROR_EXPIRE=7d                    # Error log expiration time, default is in days, d|days, h|hours. Invalid configuration defaults to 7d
-      - ERROR_PERIOD=day                   # Error log rotation period, supports only day, hour
-      - REDIS_ADDR=apipark-redis:6379      # Redis cluster address, separated by commas
-      - REDIS_PWD={REDIS_PWD}              # Redis password
+      - ERROR_DIR=work/logs  # 日志放置目录
+      - ERROR_FILE_NAME=error.log          # 错误日志文件名
+      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
+      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
+      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
+      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
+      - REDIS_PWD={REDIS_PWD}                         # Redis密码
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
   influxdb2:
     image: influxdb:2.6
@@ -460,6 +676,114 @@ services:
       - bash
       - -c
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass {REDIS_PWD}"
+    networks:
+      - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - apipark
 networks:
@@ -515,15 +839,15 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD=123456
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql port
+      - MYSQL_PORT=3306                 #mysql端口
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # Directory for placing logs
-      - ERROR_FILE_NAME=error.log          # Error log file name
-      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. If unspecified or invalid, default is info
-      - ERROR_EXPIRE=7d                    # Error log expiration time, default is in days, d|days, h|hours. Invalid configuration defaults to 7d
-      - ERROR_PERIOD=day                   # Error log rotation period, supports only day, hour
-      - REDIS_ADDR=apipark-redis:6379      # Redis cluster address, separated by commas
-      - REDIS_PWD=123456                   # Redis password
+      - ERROR_DIR=work/logs  # 日志放置目录
+      - ERROR_FILE_NAME=error.log          # 错误日志文件名
+      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
+      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
+      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
+      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
+      - REDIS_PWD=123456                         # Redis密码
       - ADMIN_PASSWORD=12345678
   influxdb2:
     image: influxdb:2.6
@@ -551,6 +875,114 @@ services:
       - "redis-server --protected-mode yes --logfile redis.log --appendonly no --port 6379 --requirepass 123456"
     networks:
       - apipark
+  apipark-loki:
+    container_name: apipark-loki
+    image:  grafana/loki:3.2.1
+    hostname: apipark-loki
+    privileged: true
+    user: root
+    restart: always
+    ports:
+      - 3100:3100
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /mnt/config
+        cat <<EOF > /mnt/config/loki-config.yaml
+        ---
+        auth_enabled: false
+
+        server:
+          http_listen_port: 3100
+          grpc_listen_port: 9096
+
+        common:
+          instance_addr: 127.0.0.1
+          path_prefix: /tmp/loki
+          storage:
+            filesystem:
+              chunks_directory: /tmp/loki/chunks
+              rules_directory: /tmp/loki/rules
+          replication_factor: 1
+          ring:
+            kvstore:
+              store: inmemory
+
+        query_range:
+          results_cache:
+            cache:
+              embedded_cache:
+                enabled: true
+                max_size_mb: 100
+
+        schema_config:
+          configs:
+            - from: 2020-10-24
+              store: tsdb
+              object_store: filesystem
+              schema: v13
+              index:
+                prefix: index_
+                period: 24h
+        limits_config:
+          max_query_length: 90d # 设置最大查询时长为 30 天
+        ruler:
+          alertmanager_url: http://localhost:9093
+
+        # By default, Loki will send anonymous, but uniquely-identifiable usage and configuration
+        # analytics to Grafana Labs. These statistics are sent to https://stats.grafana.org/
+        #
+        # Statistics help us better understand how Loki is used, and they show us performance
+        # levels for most users. This helps us prioritize features and documentation.
+        # For more information on what's sent, look at
+        # https://github.com/grafana/loki/blob/main/pkg/analytics/stats.go
+        # Refer to the buildReport method to see what goes into a report.
+        #
+        # If you would like to disable reporting, uncomment the following lines:
+        #analytics:
+        #  reporting_enabled: false
+        table_manager:
+          retention_period: 90d
+        EOF
+        /usr/bin/loki -config.file=/mnt/config/loki-config.yaml
+    networks:
+      - apipark
+  apipark-grafana:
+    container_name: apipark-grafana
+    image:  grafana/grafana:11.3.2
+    hostname: apipark-grafana
+    privileged: true
+    restart: always
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - apipark-loki
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /etc/grafana/provisioning/datasources
+        cat <<EOF > /etc/grafana/provisioning/datasources/ds.yaml
+        apiVersion: 1
+        datasources:
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://apipark-loki:3100
+        EOF
+        /run.sh
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - apipark
 networks:
   apipark:
     driver: bridge
@@ -558,6 +990,7 @@ networks:
       driver: default
       config:
         - subnet: 172.100.0.0/24
+
 ```
 
 3. Start APIPark
