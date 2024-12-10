@@ -1,0 +1,8 @@
+{
+  "label": "Logs",
+  "position": 7,
+  "link": {
+    "type": "doc",
+    "id": "README" 
+  }
+}
