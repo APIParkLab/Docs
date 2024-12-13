@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/account_role
 ---
 
 # 账号与角色

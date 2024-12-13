@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "📜 更新日志"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/release
 ---
 
 # 更新日志

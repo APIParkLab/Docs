@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: Review Consumers
+canonicalUrl: https://docs.apipark.com/docs/next/services/review_consumers
 ---
 
 # Review Consumers

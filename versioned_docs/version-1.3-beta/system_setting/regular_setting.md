@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/regular_setting
 ---
 
 # 常规设置

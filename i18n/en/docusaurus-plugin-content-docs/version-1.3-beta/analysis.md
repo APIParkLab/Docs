@@ -1,6 +1,7 @@
 ---
 sidebar_position: 9
 title: "📊 Analysis Report"
+canonicalUrl: https://docs.apipark.com/docs/next/analysis
 ---
 
 # API Call Analysis Report

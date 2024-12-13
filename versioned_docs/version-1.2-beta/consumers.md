@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: "⌨️ 消费者"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/consumers
 ---
 
 # 消费者

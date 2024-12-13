@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/ai_model_providers
 ---
 
 # AI 模型管理

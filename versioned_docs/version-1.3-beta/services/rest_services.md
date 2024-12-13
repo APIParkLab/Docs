@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: REST 服务
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/services/rest_services
 ---
 
 # REST 服务（API 网关）

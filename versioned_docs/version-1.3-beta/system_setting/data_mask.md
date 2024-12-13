@@ -1,9 +1,7 @@
 ---
-
 sidebar_position: 6
-
 title: "数据脱敏"
-
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/data_mask
 ---
 
 # 数据脱敏

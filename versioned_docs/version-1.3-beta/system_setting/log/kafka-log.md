@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/log/kafka-log
+---
+
+
+
 # Kafka日志
 
 收集请求网关的日志信息，并将其输出到`Kafka`中，方便使用者进行二次操作，如日志分析等。
@@ -13,7 +19,7 @@
 1. 点击`运维与集成` -> `Kafka日志`，点击`添加Kafka日志`。
 
 ![](images/2024-10-27/d72cd60d6aa0cc7dd50abdae4cb249d32958647bdb3ec9247ab7a59a001ae8c9.png)  
-  
+
 
 2. 填写Kafka日志配置，填写完成后点击保存。
 

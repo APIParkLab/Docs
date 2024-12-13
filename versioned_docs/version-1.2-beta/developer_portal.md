@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 title: "🔎 API 开发者门户"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/developer_portal
 ---
 
 # API 开发者门户

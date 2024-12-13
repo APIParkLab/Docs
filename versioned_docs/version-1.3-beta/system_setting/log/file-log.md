@@ -1,3 +1,7 @@
+---
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/log/file-log
+---
+
 # 文件日志
 
 收集请求网关的日志信息，并将其输出到文件中，供开发者查询。
@@ -88,4 +92,3 @@
 1. 点击待上线配置后方的`上线`按钮。
 
 ![](images/2024-10-27/05a9a722c4dd14850c93058f6f8d0afa08b6f43b49e0f7bb0cf08c307962f792.png)  
- 

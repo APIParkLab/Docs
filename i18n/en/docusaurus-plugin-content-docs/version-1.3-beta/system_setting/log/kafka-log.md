@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/kafka-log
+---
+
+
+
 # Kafka Log
 
 Collect the log information from the request gateway and output it to `Kafka`, making it convenient for users to perform secondary operations, such as log analysis.
@@ -13,7 +19,7 @@ Enables the output of log content generated during the program's operation to a 
 1. Click `Operations and Integration` -> `Kafka Log`, and then click `Add Kafka Log`.
 
 ![](images/2024-10-27/d72cd60d6aa0cc7dd50abdae4cb249d32958647bdb3ec9247ab7a59a001ae8c9.png)  
-  
+
 
 2. Fill in the Kafka log configuration, and click save after completing.
 

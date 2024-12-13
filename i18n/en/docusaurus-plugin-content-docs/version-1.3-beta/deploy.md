@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: 🚀 Deploy APIPark
+canonicalUrl: https://docs.apipark.com/docs/next/deploy
 ---
 
 # Deploy APIPark

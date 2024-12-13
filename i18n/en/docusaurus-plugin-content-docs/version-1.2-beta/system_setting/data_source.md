@@ -1,5 +1,6 @@
 ---
 sidebar_position: 5
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/data_source
 ---
 
 # Data Source

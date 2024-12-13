@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: REST Service
+canonicalUrl: https://docs.apipark.com/docs/next/services/rest_services
 ---
 
 # REST Services (API Gateway)

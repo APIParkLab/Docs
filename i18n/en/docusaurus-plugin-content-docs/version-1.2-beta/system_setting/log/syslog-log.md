@@ -1,3 +1,7 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/syslog-log
+---
+
 # Syslog Logs
 
 ## Introduction

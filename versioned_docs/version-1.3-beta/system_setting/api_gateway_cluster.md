@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/api_gateway_cluster
 ---
 
 # API 网关

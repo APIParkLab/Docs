@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: AI Services
+canonicalUrl: https://docs.apipark.com/docs/next/services/ai_services
 ---
 
 # AI Services (AI Gateway)

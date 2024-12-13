@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/nsq-log
+---
+
+
+
 # NSQ Logs
 
 ## Introduction

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 9
 title: "📊 分析报告"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/analysis
 ---
 
 #  API 调用分析报告

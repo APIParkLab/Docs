@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: 审核消费者
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/services/review_consumers
 ---
 
 # 审核消费者

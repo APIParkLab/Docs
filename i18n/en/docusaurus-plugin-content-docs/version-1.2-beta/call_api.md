@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 title: "🔗 Calling the API"
+canonicalUrl: https://docs.apipark.com/docs/next/call_api
 ---
 
 # Calling the API

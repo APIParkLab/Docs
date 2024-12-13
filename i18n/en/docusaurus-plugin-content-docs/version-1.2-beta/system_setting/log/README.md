@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/README
+---
+
+
+
 # Log Configuration
 
 In APIPark, the log configuration feature allows users to output log data from the system's operational processes to various storage and processing systems. Logs are a means to expose the internal state of a system, and good logs can help developers quickly locate issues and find suitable ways to resolve them. By configuring log output, centralized management and analysis of logs can be achieved, thereby enhancing system maintainability and troubleshooting efficiency.

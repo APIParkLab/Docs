@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/http-log
+---
+
+
+
 # HTTP Logs
 
 Collect log information from request gateways and output it to an **HTTP server** to facilitate further operations such as log analysis.

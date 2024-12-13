@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/log/http-log
+---
+
+
+
 # HTTP日志
 
 收集请求网关的日志信息，并将其输出到**HTTP服务器**中，方便使用者进行二次操作，如日志分析等。

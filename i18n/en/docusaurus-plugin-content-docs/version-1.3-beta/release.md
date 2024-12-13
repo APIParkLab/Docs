@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: "📜 Changelog"
+canonicalUrl: https://docs.apipark.com/docs/next/release
 ---
 
 # Changelog

@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/log/file-log
+---
+
+
+
 # File Logging
 
 Collect log information from the request gateway and output it to a file for developers to query.

@@ -1,3 +1,7 @@
+---
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/log/nsq-log
+---
+
 # NSQ日志
 
 ## 简介
@@ -19,7 +23,7 @@
 1. 点击`运维与集成` -> `NSQ日志`，点击`添加NSQ日志`。
 
 ![](images/2024-10-27/936703be2a7022424dadd0c2547848da320ea888223dbae357f56ed6243525e5.png)  
- 
+
 
 2. 填写NSQ日志配置，填写完成后点击`确认`。
 
@@ -83,4 +87,4 @@
 1. 点击待上线配置后方的`上线`按钮。
 
 ![](images/2024-10-27/d0ed6a8ef56b7303297b97630d0ad2a99d11f834b9764660e6fb613fecd118c6.png)  
- 
+

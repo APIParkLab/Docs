@@ -1,6 +1,7 @@
 ---
 sidebar_position: 6
 title: "🤝 Team"
+canonicalUrl: https://docs.apipark.com/docs/next/teams
 ---
 
 # Team

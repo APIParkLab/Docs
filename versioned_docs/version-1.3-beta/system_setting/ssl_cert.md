@@ -1,5 +1,6 @@
 ---
 sidebar_position: 7
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/ssl_cert
 ---
 
 

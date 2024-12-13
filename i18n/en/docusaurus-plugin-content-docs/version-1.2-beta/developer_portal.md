@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 title: "🔎 API Developer Portal"
+canonicalUrl: https://docs.apipark.com/docs/next/developer_portal
 ---
 
 # API Developer Portal

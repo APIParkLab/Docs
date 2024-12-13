@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/system_setting/regular_setting
 ---
 
 # 常规设置
@@ -74,9 +75,7 @@ sidebar_position: 1
 
 #### 分类排序
 1. 点击分类前方的排序按钮，如下图
-![](images/2024-10-27/ec0438456261c5e7f8a21e9a3b1639bbdfea6b8b36658c2b94dec286016c92f3.png)  
-
-2. 拖动分类，直到排序准确，如下图
-![](images/2024-10-27/38c2cfc514e189c30c1163ff97cd9757a2afa8cb67ca178120b0d096317cfc96.png)  
+  ![](images/2024-10-27/ec0438456261c5e7f8a21e9a3b1639bbdfea6b8b36658c2b94dec286016c92f3.png)  
+2. 拖动分类，直到排序准确，如下图![](images/2024-10-27/38c2cfc514e189c30c1163ff97cd9757a2afa8cb67ca178120b0d096317cfc96.png)  
 
 ![](images/2024-10-27/12bc6bdfe9948faa2e94f05e3f7bdfc9ff505e957fff7a8b529bec0e30d92ca2.png)  

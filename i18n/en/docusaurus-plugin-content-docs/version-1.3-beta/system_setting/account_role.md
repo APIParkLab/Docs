@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/account_role
 ---
 
 # Account and Roles

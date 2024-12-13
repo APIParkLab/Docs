@@ -3,7 +3,7 @@
 sidebar_position: 6
 
 title: "Data Masking"
-
+canonicalUrl: https://docs.apipark.com/docs/next/system_setting/data_mask
 ---
 
 # **Data Masking**

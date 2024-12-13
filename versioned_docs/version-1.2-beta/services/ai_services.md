@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: AI 服务
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/services/ai_services
 ---
 
 # AI 服务（AI 网关）

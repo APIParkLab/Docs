@@ -1,3 +1,9 @@
+---
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/log/syslog-log
+---
+
+
+
 # Syslog日志
 
 ## 简介

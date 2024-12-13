@@ -1,6 +1,7 @@
 ---
 sidebar_position: 5
 title: "⌨️ Consumers"
+canonicalUrl: https://docs.apipark.com/docs/next/consumers
 ---
 
 # Consumers

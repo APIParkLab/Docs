@@ -1,6 +1,7 @@
 ---
 sidebar_position: 8
 title: "🔗 调用 API"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/call_api
 ---
 
 # 调用API

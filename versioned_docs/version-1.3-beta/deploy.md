@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 title: 🚀 部署 APIPark
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/deploy
 ---
 
 # 部署 APIPark

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 title: "🦄 概述"
+canonicalUrl: https://docs.apipark.com/zh-Hans/docs/next/overview
 ---
 
 # APIPark
@@ -111,7 +112,7 @@ curl -sSO https://download.apipark.com/install/quick-start.sh; bash quick-start.
         <img src="https://apipark.com/wp-content/uploads/2024/08/Life-Cycle.png" />
     </td>
   </tr>
-  
+
   <tr>
     <th>
       审核租户的API的调用申请
@@ -147,7 +148,7 @@ curl -sSO https://download.apipark.com/install/quick-start.sh; bash quick-start.
             <img src="https://apipark.com/wp-content/uploads/2024/08/Chart.png" />
     </td>
   </tr>
-  
+
 </table>
 
 
