@@ -18,7 +18,8 @@ canonicalUrl: https://docs.apipark.com/docs/next/overview
 6. Monitor your AI API usage with clear charts.
 7. Quickly output API request logs to third-party log platforms.
 
-![<br/> 1](images/2024-10-26/2f3a9b53d1b32c3f26339d8bbb58640db92f6e670e530ee673fad168537423ca.png)  
+![](images/2024-12-18/f9b31736882f149766c86bfe25f2a351c95f73606cfb80a3cb79ca7049d128cc.png)  
+
 <br/>
 
 ✨APIPark is also a powerful cloud-native API gateway:
