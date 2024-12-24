@@ -44,13 +44,13 @@ APIPark supports seamless integration of API services into various AI Agent plat
 
 This integration method not only improves work efficiency but also ensures the accuracy and consistency of the API services. Additionally, AI Agent platforms can fully leverage the rich API resources provided by APIPark to expand functionality and service coverage.
 
-## 1. **Obtain Integration URL or File**
+## **Obtain Integration URL or File**
 
 Go to the **API Marketplace** module, select a specific API service, and enter the service details page. Then, choose the **Integration** tab. On this subpage, you can click the **Copy URL** button to obtain the integration URL. If the Agent platform you want to integrate with does not support URL-based integration, you can click **Download** **JSON** **File** to download the current API service’s JSON file, which is formatted in OpenAPI 3.0 standard.
 
 ![](images/2024-12-10/08e4b8ab9d6615609f670b8c79011ae205613d2c207e84fe06dbcb34a84766c7.png)  
 
-## 2. **Configure Integration Address Domain**
+## **Configure Integration Address Domain**
 
 The system will by default use the current APIPark domain as the integration address domain. However, to comply with the company’s network security policies, you can configure a separate access domain for the integration address. Go to the **System Settings** module, select the **General** menu on the left, and then configure the **Integration Address**. Enter the domain name in the input field for the integration address.
 
