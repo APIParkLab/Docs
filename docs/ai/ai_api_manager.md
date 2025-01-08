@@ -1,7 +1,6 @@
-```
+---
 sidebar_position: 4
-```
-
+---
 # AI API 管理
 
 AI API 管理用于集中展示和管理调用各个 AI 供应商的 API。用户可以通过该列表查看所有调用的 AI API 的详细信息和消耗token的情况。
