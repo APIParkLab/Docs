@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 ---
-
 # Setting Up AI Models
 
 Before starting to create AI services, you first need to configure your AI model provider. APIPark supports over 100 AI models, including OpenAI, Anthropic, AWS Bedrock, Google Gemini, and more. Once the provider is configured, you can select different models to create AI services and manage all authorization information and cost statistics for AI services within APIPark.
