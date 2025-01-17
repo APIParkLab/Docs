@@ -343,6 +343,21 @@ services:
       retries: 5
     networks:
       - apipark
+  apipark-nsq:
+    container_name: apipark-nsq
+    image: nsqio/nsq:v1.3.0
+    hostname: apipark-nsq
+    privileged: true
+    restart: always
+    command:
+      - /nsqd --data-path=/data
+    ports:
+      - 4150:4150
+      - 4151:4151
+    volumes:
+      - /var/lib/apipark/nsq:/data
+    networks:
+      - apipark
   apipark-apinto:
     image: eolinker/apinto-gateway
     container_name: apipark-apinto
@@ -555,6 +570,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - apipark
+  apipark-nsq:
+    container_name: apipark-nsq
+    image: nsqio/nsq:v1.3.0
+    hostname: apipark-nsq
+    privileged: true
+    restart: always
+    command:
+      - /nsqd --data-path=/data
+    ports:
+      - 4150:4150
+      - 4151:4151
+    volumes:
+      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
   apipark-apinto:
@@ -786,6 +816,21 @@ services:
       retries: 5
     networks:
       - apipark
+  apipark-nsq:
+    container_name: apipark-nsq
+    image: nsqio/nsq:v1.3.0
+    hostname: apipark-nsq
+    privileged: true
+    restart: always
+    command:
+      - /nsqd --data-path=/data
+    ports:
+      - 4150:4150
+      - 4151:4151
+    volumes:
+      - /var/lib/apipark/nsq:/data
+    networks:
+      - apipark
 networks:
   apipark:
     driver: bridge
@@ -981,6 +1026,21 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - apipark
+  apipark-nsq:
+    container_name: apipark-nsq
+    image: nsqio/nsq:v1.3.0
+    hostname: apipark-nsq
+    privileged: true
+    restart: always
+    command:
+      - /nsqd --data-path=/data
+    ports:
+      - 4150:4150
+      - 4151:4151
+    volumes:
+      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
 networks:
