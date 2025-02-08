@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.3-beta
+    image: apipark/apipark:v1.4.4-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -350,12 +350,10 @@ services:
     privileged: true
     restart: always
     command:
-      - /nsqd --data-path=/data
+      - /nsqd
     ports:
       - 4150:4150
       - 4151:4151
-    volumes:
-      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
   apipark-apinto:
@@ -414,7 +412,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.3-beta
+    image: apipark/apipark:v1.4.4-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -579,12 +577,10 @@ services:
     privileged: true
     restart: always
     command:
-      - /nsqd --data-path=/data
+      - /nsqd
     ports:
       - 4150:4150
       - 4151:4151
-    volumes:
-      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
   apipark-apinto:
@@ -658,7 +654,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.3-beta
+    image: apipark/apipark:v1.4.4-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -823,12 +819,10 @@ services:
     privileged: true
     restart: always
     command:
-      - /nsqd --data-path=/data
+      - /nsqd
     ports:
       - 4150:4150
       - 4151:4151
-    volumes:
-      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
 networks:
@@ -1035,12 +1029,10 @@ services:
     privileged: true
     restart: always
     command:
-      - /nsqd --data-path=/data
+      - /nsqd
     ports:
       - 4150:4150
       - 4151:4151
-    volumes:
-      - /var/lib/apipark/nsq:/data
     networks:
       - apipark
 networks:
