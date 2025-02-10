@@ -1,30 +1,28 @@
 ---
 sidebar_position: 3
 title: 🚀 Deploy APIPark
+icon: rocket-launch
 ---
 
 # Deploy APIPark
+
 ## Hardware Requirements
 
-:::tip
-Recommended Configuration:
+:::tip Recommended Configuration:
 
-- **CPU**: 8 cores
-- **Memory**: 16GB
-- **Disk Storage**: 200GB
-- **Operating System**: Linux / Mac
-- **System Architecture**: AMD64 / ARM64
-  :::
+* **CPU**: 8 cores
+* **Memory**: 16GB
+* **Disk Storage**: 200GB
+* **Operating System**: Linux / Mac
+* **System Architecture**: AMD64 / ARM64 :::
 
-:::note
-Minimum Configuration:
+:::note Minimum Configuration:
 
-- **CPU**: 2 cores
-- **Memory**: 4GB
-- **Disk Storage**: 200GB
-- **Operating System**: Linux / Mac
-- **System Architecture**: AMD64 / ARM64
-  :::
+* **CPU**: 2 cores
+* **Memory**: 4GB
+* **Disk Storage**: 200GB
+* **Operating System**: Linux / Mac
+* **System Architecture**: AMD64 / ARM64 :::
 
 ## Program Dependencies
 
@@ -36,8 +34,7 @@ Minimum Configuration:
 
 ### Deploy using Script
 
-:::note
-Supported System List:
+:::note Supported System List:
 
 * CentOS 7.9 (representing 7.x)
 * CentOS 8.5 (representing 8.x)
@@ -47,8 +44,7 @@ Supported System List:
 * Alibaba Cloud Linux 3.2104
 * Alibaba Cloud Linux 2.1903
 
-Currently, the installations have only been tested for the above systems. If you need a one-click deployment for other systems, you can submit an [Issue](https://github.com/APIParkLab/APIPark/issues) to us.
-:::
+Currently, the installations have only been tested for the above systems. If you need a one-click deployment for other systems, you can submit an [Issue](https://github.com/APIParkLab/APIPark/issues) to us. :::
 
 Enter the one-click deployment command:
 
@@ -64,7 +60,7 @@ Follow the prompts to deploy. After deployment is complete, deployment informati
 
 To install APIPark using this method, you need to install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 
-After the deployment, APIPark needs to bind with the API Gateway node to function. For detailed instructions, please refer to [Configure API Gateway](./system_setting/api_gateway_cluster.md).
+After the deployment, APIPark needs to bind with the API Gateway node to function. For detailed instructions, please refer to [Configure API Gateway](system_setting/api_gateway_cluster.md).
 
 :::
 
@@ -140,20 +136,20 @@ peer: # Configuration information for communication between cluster nodes
 
 **Configuration Description**
 
-| Field Name                | Description                                                  |
-| :------------------------ | :----------------------------------------------------------- |
-| version                   | Configuration version number, default is 2                  |
-| client                    | openAPI configuration information                            |
-| client -> listen_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}` |
-| client -> advertise_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| client -> certificate     | List of openAPI certificate information                      |
-| gateway                   | Configuration information for forwarding proxy core program  |
-| gateway -> listen_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}` |
-| gateway -> advertise_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| peer                      | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc. |
-| peer -> listen_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
-| peer -> advertise_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
-| peer -> certificate       | List of Raft node certificate information                    |
+| Field Name                 | Description                                                                                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| version                    | Configuration version number, default is 2                                                                                                       |
+| client                     | openAPI configuration information                                                                                                                |
+| client -> listen\_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}`                                                                          |
+| client -> advertise\_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}`                       |
+| client -> certificate      | List of openAPI certificate information                                                                                                          |
+| gateway                    | Configuration information for forwarding proxy core program                                                                                      |
+| gateway -> listen\_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}`                                                    |
+| gateway -> advertise\_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
+| peer                       | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc.                 |
+| peer -> listen\_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}`                                                                        |
+| peer -> advertise\_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}`                                                                 |
+| peer -> certificate        | List of Raft node certificate information                                                                                                        |
 
 3. Edit `docker-compose.yml` file
 
@@ -384,9 +380,9 @@ networks:
 
 In the above configuration, values within "{}" are variables. Descriptions of relevant variables are as follows:
 
-- **MYSQL_PWD:** Initialization password for the MySQL database root user.
-- **REDIS_PWD:** Redis password.
-- **ADMIN_PASSWORD:** Initial password for APIPark Admin account.
+* **MYSQL\_PWD:** Initialization password for the MySQL database root user.
+* **REDIS\_PWD:** Redis password.
+* **ADMIN\_PASSWORD:** Initial password for APIPark Admin account.
 
 Example of replaced configuration:
 
@@ -619,7 +615,6 @@ After execution, the following images will be displayed:
 
 ![](images/2024-10-30/0d4ef04a942f1a6e47c6b43ddeda1d0c5e7f8a4ff4b6c7ffde08c4594481bee4.png)
 
-
 ![](images/2024-10-30/bcd15ba41f68be367f87ff38709f1fb60f3de5e8c24b4b658b2e4bd8afd7dcdb.png)
 
 #### Independently Deploy APIPark
@@ -836,9 +831,9 @@ networks:
 
 In the above configuration, values within "{}" are variables. Descriptions of relevant variables are as follows:
 
-- **MYSQL_PWD:** Initialization password for the MySQL database root user.
-- **REDIS_PWD:** Redis password.
-- **ADMIN_PASSWORD:** Initial password for APIPark Admin account.
+* **MYSQL\_PWD:** Initialization password for the MySQL database root user.
+* **REDIS\_PWD:** Redis password.
+* **ADMIN\_PASSWORD:** Initial password for APIPark Admin account.
 
 Example of replaced configuration:
 
@@ -1053,9 +1048,9 @@ docker-compose up -d
 
 After execution, the following images will be displayed:
 
-![](images/2024-10-30/6a1b5e6f3ca7901e5631afaba4dd2e717499af0b03fc9dd34ca9c2b2ab2bd6db.png)  
+![](images/2024-10-30/6a1b5e6f3ca7901e5631afaba4dd2e717499af0b03fc9dd34ca9c2b2ab2bd6db.png)
 
-![](images/2024-10-30/1d2de0b208aa28ac46435bf43739fb9fc5e76e8724122883adebd540aff582a7.png)  
+![](images/2024-10-30/1d2de0b208aa28ac46435bf43739fb9fc5e76e8724122883adebd540aff582a7.png)
 
 #### Independently Deploy API Gateway
 
@@ -1129,20 +1124,20 @@ peer: # Configuration information for communication between cluster nodes
 
 **Configuration Description**
 
-| Field Name                | Description                                                  |
-| :------------------------ | :----------------------------------------------------------- |
-| version                   | Configuration version number, default is 2                  |
-| client                    | openAPI configuration information                            |
-| client -> listen_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}` |
-| client -> advertise_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| client -> certificate     | List of openAPI certificate information                      |
-| gateway                   | Configuration information for forwarding proxy core program  |
-| gateway -> listen_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}` |
-| gateway -> advertise_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| peer                      | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc. |
-| peer -> listen_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
-| peer -> advertise_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
-| peer -> certificate       | List of Raft node certificate information                    |
+| Field Name                 | Description                                                                                                                                      |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| version                    | Configuration version number, default is 2                                                                                                       |
+| client                     | openAPI configuration information                                                                                                                |
+| client -> listen\_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}`                                                                          |
+| client -> advertise\_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}`                       |
+| client -> certificate      | List of openAPI certificate information                                                                                                          |
+| gateway                    | Configuration information for forwarding proxy core program                                                                                      |
+| gateway -> listen\_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}`                                                    |
+| gateway -> advertise\_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
+| peer                       | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc.                 |
+| peer -> listen\_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}`                                                                        |
+| peer -> advertise\_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}`                                                                 |
+| peer -> certificate        | List of Raft node certificate information                                                                                                        |
 
 3. Run Docker container and mount configuration file `config.yml`
 
@@ -1157,7 +1152,6 @@ docker run -td  -p 8099:8099 -p 9400:9400 -p 9401:9401 --privileged=true \
 #### Build API Gateway Cluster
 
 1. Deploy a new node on another server following the **deployment steps** above
-
 2. After deployment, enter the Docker container of any node (this step can be ignored for **installation package deployment**)
 
 ```
@@ -1172,8 +1166,8 @@ docker exec -it apinto_node bash
 
 In the above command, values within `{}` are variables and need to be replaced with actual values.
 
-- IP: Server IP
-- Port number: Raft node communication port number in `config.yml` under the `peer` configuration section
+* IP: Server IP
+* Port number: Raft node communication port number in `config.yml` under the `peer` configuration section
 
 An example is shown below:
 
@@ -1199,9 +1193,7 @@ The one-click deployment script installs the InfluxDB database by default. After
 
 2. Fill in the initialization information, including username, password, organization name, and Bucket name.
 
-:::warning
-Here, fill `apipark` for `Organization Name` and `apinto` for `Bucket Name`.
-:::
+:::warning Here, fill `apipark` for `Organization Name` and `apinto` for `Bucket Name`. :::
 
 ![](images/2024-10-29-02-20-19.png)
 
