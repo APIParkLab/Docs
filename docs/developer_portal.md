@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 title: 🔎 API 开发者门户
+icon: rectangle-code
 ---
 
 # API 开发者门户
