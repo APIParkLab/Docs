@@ -1,6 +1,7 @@
 ---
 sidebar_position: 7
 title: 🔎 API Developer Portal
+icon: rectangle-code
 ---
 
 # API Developer Portal

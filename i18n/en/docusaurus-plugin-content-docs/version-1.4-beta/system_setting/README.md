@@ -1,2 +1,6 @@
+---
+icon: gear
+---
+
 # System Settings
 
