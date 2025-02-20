@@ -14,5 +14,13 @@
   "sidebar.tutorialSidebar.category.日志": {
     "message": "Logs",
     "description": "The label for category 日志 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.🌐 服务": {
+    "message": "🌐 服务",
+    "description": "The label for category 🌐 服务 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.🤖 AI": {
+    "message": "🤖 AI",
+    "description": "The label for category 🤖 AI in sidebar tutorialSidebar"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "version.label": {
+    "message": "1.5-beta",
+    "description": "The label for version 1.5-beta"
+  },
+  "sidebar.tutorialSidebar.category.⚙️ 系统设置": {
+    "message": "⚙️ System Settings",
+    "description": "The label for category ⚙️ 系统设置 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.🤖 服务": {
+    "message": "🤖 Services",
+    "description": "The label for category 🤖 服务 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.日志": {
+    "message": "Logs",
+    "description": "The label for category 日志 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.🤖 AI": {
+    "message": "🤖 AI",
+    "description": "The label for category 🤖 AI in sidebar tutorialSidebar"
+  }
+}
