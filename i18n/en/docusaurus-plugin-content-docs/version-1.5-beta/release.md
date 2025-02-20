@@ -4,6 +4,10 @@ title: "📜 Changelog"
 ---
 
 # Changelog
+## 🎉 V1.5 Beta
+- Added one-click deployment capability for open-source LLMs. Supports deploying the world's most popular open-source large-scale models via APIPark, including simplified and full-featured versions of models like DeepSeek-R1 and DeepSeek-V3.
+- Optimized the AI model deployment configuration page experience by migrating load balancing capabilities to a new standalone menu page and upgrading it to support model-level load balancing. This allows users to more flexibly define failover strategies between AI models.
+- Continuously improved the AI model interface invocation process. When creating an AI service, the system now automatically initializes service access authorization, shortening the user configuration process and enhancing the overall user experience.
 
 ## 🎉 V1.4 Beta
 
