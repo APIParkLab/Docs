@@ -7,9 +7,9 @@
     "message": "⚙️ System Settings",
     "description": "The label for category ⚙️ 系统设置 in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.🤖 服务": {
-    "message": "🤖 Services",
-    "description": "The label for category 🤖 服务 in sidebar tutorialSidebar"
+  "sidebar.tutorialSidebar.category.🌐 服务": {
+    "message": "🌐 服务",
+    "description": "The label for category 🌐 服务 in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.日志": {
     "message": "Logs",
