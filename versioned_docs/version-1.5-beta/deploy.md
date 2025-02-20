@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.4-beta
+    image: apipark/apipark:v1.5.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -412,7 +412,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.4-beta
+    image: apipark/apipark:v1.5.0-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -655,7 +655,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.4.4-beta
+    image: apipark/apipark:v1.5.0-beta
     container_name: apipark
     privileged: true
     restart: always
