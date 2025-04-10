@@ -18,6 +18,7 @@
     "@docusaurus/core": "3.4.0",
     "@docusaurus/plugin-google-gtag": "^3.5.2",
     "@docusaurus/preset-classic": "3.4.0",
+    "@easyops-cn/docusaurus-search-local": "^0.49.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "plugin-image-zoom": "github:flexanalytics/plugin-image-zoom",
