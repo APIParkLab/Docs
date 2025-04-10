@@ -865,7 +865,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.2.0-beta
+    image: apipark/apipark:v1.5.0-beta
     container_name: apipark
     privileged: true
     restart: always
