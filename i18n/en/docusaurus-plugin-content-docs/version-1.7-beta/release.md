@@ -4,6 +4,24 @@ title: "📜 Changelog"
 ---
 
 # Changelog
+## 🎉 V1.7 Beta
+### ✨ Added
+- **System APIKey Functionality**
+  - Manage and maintain system APIKeys in the UI.
+  - Users can securely access APIPark's OpenAPI and system MCP services using valid API keys.
+  - Quickly integrate with third-party systems.
+- **Service-level MCP (Model Context Protocol) support**
+  - One-click to enable MCP access for any HTTP or AI API on APIPark  
+  - MCP-enabled services are tagged in the API Portal  
+  - MCP configuration info is available in the service detail page, ready to use in your AI Agent
+
+- **Platform-level MCP access**
+  - System-wide MCP endpoint to access all public APIs via a unified interface
+  - Perfect for building intelligent, multimodal agents
+### 🎨 Improved
+- **Service detail UI optimization**
+- **Analytics dashboard optimization**  
+
 ## 🎉 V1.6 Beta
 ### New LLM Provider Integrations
 Added pre-configured support for:
