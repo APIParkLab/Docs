@@ -7,47 +7,47 @@ title: 🚀 Deploy APIPark
 ## Hardware Requirements
 
 :::tip
-Recommended Configuration:
+Recommended configuration:
 
 - **CPU**: 8 cores
-- **Memory**: 16GB
-- **Disk Storage**: 200GB
+- **Memory**: 16G
+- **Disk Storage**: 200G
 - **Operating System**: Linux / Mac
 - **System Architecture**: AMD64 / ARM64
-  :::
+:::
 
 :::note
-Minimum Configuration:
+Minimum configuration:
 
 - **CPU**: 2 cores
-- **Memory**: 4GB
-- **Disk Storage**: 200GB
+- **Memory**: 4G
+- **Disk Storage**: 200G
 - **Operating System**: Linux / Mac
 - **System Architecture**: AMD64 / ARM64
-  :::
+:::
 
-## Program Dependencies
+## Software Dependencies
 
-`APIPark` relies on `MYSQL, Redis, InfluxDB` databases. The required versions for these databases are:
+`APIPark` depends on `MYSQL, Redis, InfluxDB` databases. Below are the required versions for these databases:
 
 <table><thead><tr><th width="184">Name</th><th>Version Requirement</th></tr></thead><tbody><tr><td>MYSQL</td><td>>=5.7.x</td></tr><tr><td>Redis</td><td>>=6.2.x</td></tr><tr><td>InfluxDB</td><td>>=2.6</td></tr></tbody></table>
 
 ## Deployment Methods
 
-### Deploy using Script
+### Deploy with Script
 
 :::note
-Supported System List:
+List of supported systems:
 
-* CentOS 7.9 (representing 7.x)
-* CentOS 8.5 (representing 8.x)
+* CentOS 7.9 (representative of 7.x)
+* CentOS 8.5 (representative of 8.x)
 * Ubuntu 20.04
 * Ubuntu 22.04
 * Debian 12.4
 * Alibaba Cloud Linux 3.2104
 * Alibaba Cloud Linux 2.1903
 
-Currently, the installations have only been tested for the above systems. If you need a one-click deployment for other systems, you can submit an [Issue](https://github.com/APIParkLab/APIPark/issues) to us.
+Currently, only the above deployments have been tested. If you need a one-click deployment for other systems, you can submit an [Issue](https://github.com/APIParkLab/APIPark/issues) to us.
 :::
 
 Enter the one-click deployment command:
@@ -56,15 +56,15 @@ Enter the one-click deployment command:
 curl -sSO https://download.apipark.com/install/quick-start.sh; bash quick-start.sh
 ```
 
-Follow the prompts to deploy. After deployment is complete, deployment information will be displayed.
+Follow the prompts to complete the deployment. Deployment information will be displayed upon completion.
 
-### Docker-Compose Deployment
+### Deploy with Docker-Compose
 
 :::note
 
 To install APIPark using this method, you need to install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 
-After the deployment, APIPark needs to bind with the API Gateway node to function. For detailed instructions, please refer to [Configure API Gateway](./system_setting/api_gateway_cluster.md).
+After deployment, APIPark requires binding an API Gateway node to be usable. For detailed tutorials, please refer to [Configure API Gateway](./system_setting/api_gateway_cluster.md).
 
 :::
 
@@ -80,80 +80,80 @@ vi config.yml
 
 ```
 version: 2
-#certificate: # Directory for storing certificates
+#certificate: # Root directory for certificates
 #  dir: /etc/apinto/cert
 client:
-  advertise_urls: # Broadcast address of open api service
+  advertise_urls: # Open API broadcast addresses
     - http://{IP}:9400
-  listen_urls: # Listening address of open api service
+  listen_urls: # Open API listening addresses
     - http://0.0.0.0:9400
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 gateway:
-  advertise_urls: # Broadcast address of forwarding service
+  advertise_urls: # Forwarding service broadcast addresses
     - http://{IP}:8099
     - https://{IP}:8099
-  listen_urls: # Listening address of forwarding service
+  listen_urls: # Forwarding service listening addresses
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
-peer: # Configuration information for communication between cluster nodes
-  listen_urls: # Node listening address
+peer: # Cluster node communication configuration information
+  listen_urls: # Node listening addresses
     - http://0.0.0.0:9401
-  advertise_urls: # Broadcast address for node communication
+  advertise_urls: # Node communication broadcast addresses
     - http://{IP}:9401
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 ```
 
-In the above configuration, `{IP}` is a variable and should be replaced with the **host IP** of the container. Suppose the host IP is `172.18.65.22`, then the configuration should be as follows:
+In the above configuration, `{IP}` is a variable that should be replaced with the **host machine IP** of the container. If the host machine IP is `172.18.65.22`, the configuration should be as follows:
 
 ```
 version: 2
-#certificate: # Directory for storing certificates
+#certificate: # Root directory for certificates
 #  dir: /etc/apinto/cert
 client:
-  advertise_urls: # Broadcast address of open api service
+  advertise_urls: # Open API broadcast addresses
     - http://172.18.65.22:9400
-  listen_urls: # Listening address of open api service
+  listen_urls: # Open API listening addresses
     - http://0.0.0.0:9400
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 gateway:
-  advertise_urls: # Broadcast address of forwarding service
+  advertise_urls: # Forwarding service broadcast addresses
     - http://172.18.65.22:8099
     - https://172.18.65.22:8099
-  listen_urls: # Listening address of forwarding service
+  listen_urls: # Forwarding service listening addresses
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
-peer: # Configuration information for communication between cluster nodes
-  listen_urls: # Node listening address
+peer: # Cluster node communication configuration information
+  listen_urls: # Node listening addresses
     - http://0.0.0.0:9401
-  advertise_urls: # Broadcast address for node communication
+  advertise_urls: # Node communication broadcast addresses
     - http://172.18.65.22:9401
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 ```
 
-**Configuration Description**
+**Configuration Explanation**
 
 | Field Name                | Description                                                  |
 | :------------------------ | :----------------------------------------------------------- |
-| version                   | Configuration version number, default is 2                  |
-| client                    | openAPI configuration information                            |
-| client -> listen_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}` |
-| client -> advertise_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| client -> certificate     | List of openAPI certificate information                      |
-| gateway                   | Configuration information for forwarding proxy core program  |
-| gateway -> listen_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}` |
-| gateway -> advertise_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| peer                      | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc. |
-| peer -> listen_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
-| peer -> advertise_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
-| peer -> certificate       | List of Raft node certificate information                    |
+| version                   | Configuration version number, default is 2                   |
+| client                    | OpenAPI configuration information                            |
+| client -> listen_urls     | OpenAPI listening addresses, format: `{protocol}://{IP}:{port}` |
+| client -> advertise_urls  | OpenAPI broadcast addresses, displayed in cluster node list in console, format: `{protocol}://{IP/domain}:{port}` |
+| client -> certificate     | OpenAPI certificate information list                         |
+| gateway                   | Forwarding agent core program configuration information      |
+| gateway -> listen_urls    | Forwarding agent core program listening addresses, format: `{protocol}://{IP}:{port}` |
+| gateway -> advertise_urls | Forwarding agent core program broadcast addresses, displayed in cluster node list in console, format: `{protocol}://{IP/domain}:{port}` |
+| peer                      | Raft node configuration information for Raft cluster node configuration synchronization, joining or leaving cluster operations communication |
+| peer -> listen_urls       | Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
+| peer -> advertise_urls    | Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
+| peer -> certificate       | Raft node certificate information list                       |
 
 3. Edit `docker-compose.yml` file
 
@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -199,26 +199,35 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD={MYSQL_PWD}
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql端口
+      - MYSQL_PORT=3306                 # MySQL port
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # 日志放置目录
-      - ERROR_FILE_NAME=error.log          # 错误日志文件名
-      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
-      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
-      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
-      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
-      - REDIS_PWD={REDIS_PWD}                         # Redis密码
+      - ERROR_DIR=work/logs  # Log directory
+      - ERROR_FILE_NAME=error.log          # Error log file name
+      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. Default is info if not set or invalid
+      - ERROR_EXPIRE=7d                    # Error log expiration time, default unit is days, d|days, h|hours. Default is 7d if not valid
+      - ERROR_PERIOD=day                  # Error log rotation period, only supports day, hour
+      - REDIS_ADDR=apipark-redis:6379           # Redis cluster address, multiple addresses separated by commas
+      - REDIS_PWD={REDIS_PWD}                         # Redis password
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
-  influxdb2:
+      - Init=true
+      - InfluxdbToken={INFLUXDB_TOKEN}
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={INFLUXDB_TOKEN}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -286,7 +295,7 @@ services:
                 prefix: index_
                 period: 24h
         limits_config:
-          max_query_length: 90d # 设置最大查询时长为 30 天
+          max_query_length: 90d # set max query length to 90 days
         ruler:
           alertmanager_url: http://localhost:9093
 
@@ -361,12 +370,10 @@ services:
     container_name: apipark-apinto
     privileged: true
     restart: always
-    command: 
-      - ./start.sh
     ports:
-      - "8099:8099"
-      - "9400:9400"
-      - "9401:9401"
+      - "18099:8099"
+      - "19400:9400"
+      - "19401:9401"
     volumes:
       - /var/lib/apipark/apinto/data:/var/lib/apinto
       - /var/lib/apipark/apinto/log:/var/log/apinto
@@ -382,13 +389,14 @@ networks:
         - subnet: 172.100.0.0/24
 ```
 
-In the above configuration, values within "{}" are variables. Descriptions of relevant variables are as follows:
+In the above configuration, items enclosed in "{}" are variables. The related variable explanations are as follows:
 
-- **MYSQL_PWD:** Initialization password for the MySQL database root user.
+- **MYSQL_PWD:** Initial password for the MySQL database root user.
 - **REDIS_PWD:** Redis password.
-- **ADMIN_PASSWORD:** Initial password for APIPark Admin account.
+- **ADMIN_PASSWORD:** Initial password for the APIPark Admin account.
+- **INFLUXDB_TOKEN:** Initial token for InfluxDB.
 
-Example of replaced configuration:
+An example of a configuration after replacement is as follows:
 
 ```
 version: '3'
@@ -412,7 +420,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -426,26 +434,35 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD=123456
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql端口
+      - MYSQL_PORT=3306                 # MySQL port
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # 日志放置目录
-      - ERROR_FILE_NAME=error.log          # 错误日志文件名
-      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
-      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
-      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
-      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
-      - REDIS_PWD=123456                         # Redis密码
+      - ERROR_DIR=work/logs  # Log directory
+      - ERROR_FILE_NAME=error.log          # Error log file name
+      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. Default is info if not set or invalid
+      - ERROR_EXPIRE=7d                    # Error log expiration time, default unit is days, d|days, h|hours. Default is 7d if not valid
+      - ERROR_PERIOD=day                  # Error log rotation period, only supports day, hour
+      - REDIS_ADDR=apipark-redis:6379           # Redis cluster address, multiple addresses separated by commas
+      - REDIS_PWD=123456                         # Redis password
       - ADMIN_PASSWORD=12345678
-  influxdb2:
+      - Init=true
+      - InfluxdbToken=dQ9>fK6&gJ
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=dQ9>fK6&gJ
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -513,7 +530,7 @@ services:
                 prefix: index_
                 period: 24h
         limits_config:
-          max_query_length: 90d # 设置最大查询时长为 30 天
+          max_query_length: 90d # set max query length to 90 days
         ruler:
           alertmanager_url: http://localhost:9093
 
@@ -588,12 +605,10 @@ services:
     container_name: apipark-apinto
     privileged: true
     restart: always
-    command: 
-      - ./start.sh
     ports:
-      - "8099:8099"
-      - "9400:9400"
-      - "9401:9401"
+      - "18099:8099"
+      - "19400:9400"
+      - "19401:9401"
     volumes:
       - /var/lib/apipark/apinto/data:/var/lib/apinto
       - /var/lib/apipark/apinto/log:/var/log/apinto
@@ -615,14 +630,14 @@ networks:
 docker-compose up -d
 ```
 
-After execution, the following images will be displayed:
+Once completed, the following image will appear:
 
-![](images/2024-10-30/0d4ef04a942f1a6e47c6b43ddeda1d0c5e7f8a4ff4b6c7ffde08c4594481bee4.png)
+![](images/2024-10-30/0d4ef04a942f1a6e47c6b43ddeda1d0c5e7f8a4ff4b6c7ffde08c4594481bee4.png)  
 
 
-![](images/2024-10-30/bcd15ba41f68be367f87ff38709f1fb60f3de5e8c24b4b658b2e4bd8afd7dcdb.png)
+![](images/2024-10-30/bcd15ba41f68be367f87ff38709f1fb60f3de5e8c24b4b658b2e4bd8afd7dcdb.png)  
 
-#### Independently Deploy APIPark
+#### Deploy APIPark Alone
 
 1. Edit `docker-compose.yml` file
 
@@ -654,7 +669,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -668,26 +683,35 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD={MYSQL_PWD}
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql端口
+      - MYSQL_PORT=3306                 # MySQL port
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # 日志放置目录
-      - ERROR_FILE_NAME=error.log          # 错误日志文件名
-      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
-      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
-      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
-      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
-      - REDIS_PWD={REDIS_PWD}                         # Redis密码
+      - ERROR_DIR=work/logs  # Log directory
+      - ERROR_FILE_NAME=error.log          # Error log file name
+      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. Default is info if not set or invalid
+      - ERROR_EXPIRE=7d                    # Error log expiration time, default unit is days, d|days, h|hours. Default is 7d if not valid
+      - ERROR_PERIOD=day                  # Error log rotation period, only supports day, hour
+      - REDIS_ADDR=apipark-redis:6379           # Redis cluster address, multiple addresses separated by commas
+      - REDIS_PWD={REDIS_PWD}                         # Redis password
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
-  influxdb2:
+      - Init=true
+      - InfluxdbToken={INFLUXDB_TOKEN}
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={INFLUXDB_TOKEN}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -755,7 +779,7 @@ services:
                 prefix: index_
                 period: 24h
         limits_config:
-          max_query_length: 90d # 设置最大查询时长为 30 天
+          max_query_length: 90d # set max query length to 90 days
         ruler:
           alertmanager_url: http://localhost:9093
 
@@ -834,13 +858,14 @@ networks:
         - subnet: 172.100.0.0/24
 ```
 
-In the above configuration, values within "{}" are variables. Descriptions of relevant variables are as follows:
+In the above configuration, items enclosed in "{}" are variables. The related variable explanations are as follows:
 
-- **MYSQL_PWD:** Initialization password for the MySQL database root user.
+- **MYSQL_PWD:** Initial password for the MySQL database root user.
 - **REDIS_PWD:** Redis password.
-- **ADMIN_PASSWORD:** Initial password for APIPark Admin account.
+- **ADMIN_PASSWORD:** Initial password for the APIPark Admin account.
+- **INFLUXDB_TOKEN:** Initial token for InfluxDB.
 
-Example of replaced configuration:
+An example of a configuration after replacement is as follows:
 
 ```
 version: '3'
@@ -864,7 +889,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -878,26 +903,35 @@ services:
       - MYSQL_USER_NAME=root
       - MYSQL_PWD=123456
       - MYSQL_IP=apipark-mysql
-      - MYSQL_PORT=3306                 #mysql端口
+      - MYSQL_PORT=3306                 # MySQL port
       - MYSQL_DB="apipark"
-      - ERROR_DIR=work/logs  # 日志放置目录
-      - ERROR_FILE_NAME=error.log          # 错误日志文件名
-      - ERROR_LOG_LEVEL=info               # 错误日志等级,可选:panic,fatal,error,warning,info,debug,trace 不填或者非法则为info
-      - ERROR_EXPIRE=7d                    # 错误日志过期时间，默认单位为天，d|天，h|小时, 不合法配置默认为7d
-      - ERROR_PERIOD=day                  # 错误日志切割周期，仅支持day、hour
-      - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
-      - REDIS_PWD=123456                         # Redis密码
+      - ERROR_DIR=work/logs  # Log directory
+      - ERROR_FILE_NAME=error.log          # Error log file name
+      - ERROR_LOG_LEVEL=info               # Error log level, options: panic, fatal, error, warning, info, debug, trace. Default is info if not set or invalid
+      - ERROR_EXPIRE=7d                    # Error log expiration time, default unit is days, d|days, h|hours. Default is 7d if not valid
+      - ERROR_PERIOD=day                  # Error log rotation period, only supports day, hour
+      - REDIS_ADDR=apipark-redis:6379           # Redis cluster address, multiple addresses separated by commas
+      - REDIS_PWD=123456                         # Redis password
       - ADMIN_PASSWORD=12345678
-  influxdb2:
+      - Init=true
+      - InfluxdbToken=dQ9>fK6&gJ
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=dQ9>fK6&gJ
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -965,7 +999,7 @@ services:
                 prefix: index_
                 period: 24h
         limits_config:
-          max_query_length: 90d # 设置最大查询时长为 30 天
+          max_query_length: 90d # set max query length to 90 days
         ruler:
           alertmanager_url: http://localhost:9093
 
@@ -1051,13 +1085,12 @@ networks:
 docker-compose up -d
 ```
 
-After execution, the following images will be displayed:
-
+Once completed, the following image will appear:
 ![](images/2024-10-30/6a1b5e6f3ca7901e5631afaba4dd2e717499af0b03fc9dd34ca9c2b2ab2bd6db.png)  
 
 ![](images/2024-10-30/1d2de0b208aa28ac46435bf43739fb9fc5e76e8724122883adebd540aff582a7.png)  
 
-#### Independently Deploy API Gateway
+#### Deploy API Gateway Alone
 
 1. Edit `config.yml`
 
@@ -1065,86 +1098,86 @@ After execution, the following images will be displayed:
 vi config.yml
 ```
 
-2. Modify file configuration
+2. Modify the file configuration
 
 ```
 version: 2
-#certificate: # Directory for storing certificates
+#certificate: # Root directory for certificates
 #  dir: /etc/apinto/cert
 client:
-  advertise_urls: # Broadcast address of open api service
+  advertise_urls: # Open API broadcast addresses
     - http://{IP}:9400
-  listen_urls: # Listening address of open api service
+  listen_urls: # Open API listening addresses
     - http://0.0.0.0:9400
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 gateway:
-  advertise_urls: # Broadcast address of forwarding service
+  advertise_urls: # Forwarding service broadcast addresses
     - http://{IP}:8099
     - https://{IP}:8099
-  listen_urls: # Listening address of forwarding service
+  listen_urls: # Forwarding service listening addresses
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
-peer: # Configuration information for communication between cluster nodes
-  listen_urls: # Node listening address
+peer: # Cluster node communication configuration information
+  listen_urls: # Node listening addresses
     - http://0.0.0.0:9401
-  advertise_urls: # Broadcast address for node communication
+  advertise_urls: # Node communication broadcast addresses
     - http://{IP}:9401
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 ```
 
-In the above configuration, `{IP}` is a variable and should be replaced with the **host IP** of the container. Suppose the host IP is `172.18.65.22`, then the configuration should be as follows:
+In the above configuration, `{IP}` is a variable that should be replaced with the **host machine IP** of the container. If the host machine IP is `172.18.65.22`, the configuration should be as follows:
 
 ```
 version: 2
-#certificate: # Directory for storing certificates
+#certificate: # Root directory for certificates
 #  dir: /etc/apinto/cert
 client:
-  advertise_urls: # Broadcast address of open api service
+  advertise_urls: # Open API broadcast addresses
     - http://172.18.65.22:9400
-  listen_urls: # Listening address of open api service
+  listen_urls: # Open API listening addresses
     - http://0.0.0.0:9400
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 gateway:
-  advertise_urls: # Broadcast address of forwarding service
+  advertise_urls: # Forwarding service broadcast addresses
     - http://172.18.65.22:8099
     - https://172.18.65.22:8099
-  listen_urls: # Listening address of forwarding service
+  listen_urls: # Forwarding service listening addresses
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
-peer: # Configuration information for communication between cluster nodes
-  listen_urls: # Node listening address
+peer: # Cluster node communication configuration information
+  listen_urls: # Node listening addresses
     - http://0.0.0.0:9401
-  advertise_urls: # Broadcast address for node communication
+  advertise_urls: # Node communication broadcast addresses
     - http://172.18.65.22:9401
-  #certificate:  # Certificate configuration, allows using self-signed certificates with IP
+  #certificate:  # Certificate configuration, allowing self-signed certificates using IP
   #  - cert: server.pem
   #    key: server.key
 ```
 
-**Configuration Description**
+**Configuration Explanation**
 
 | Field Name                | Description                                                  |
 | :------------------------ | :----------------------------------------------------------- |
-| version                   | Configuration version number, default is 2                  |
-| client                    | openAPI configuration information                            |
-| client -> listen_urls     | List of openAPI listening addresses, format: `{protocol}://{IP}:{port}` |
-| client -> advertise_urls  | List of openAPI broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| client -> certificate     | List of openAPI certificate information                      |
-| gateway                   | Configuration information for forwarding proxy core program  |
-| gateway -> listen_urls    | List of forwarding proxy core program listening addresses, format: `{protocol}://{IP}:{port}` |
-| gateway -> advertise_urls | List of forwarding proxy core program broadcast addresses, displayed in the console cluster node list, format: `{protocol}://{IP/domain}:{port}` |
-| peer                      | Configuration information for Raft nodes, used for configuration synchronization, joining the cluster, leaving the cluster, etc. |
-| peer -> listen_urls       | List of Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
-| peer -> advertise_urls    | List of Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
-| peer -> certificate       | List of Raft node certificate information                    |
+| version                   | Configuration version number, default is 2                   |
+| client                    | OpenAPI configuration information                            |
+| client -> listen_urls     | OpenAPI listening addresses, format: `{protocol}://{IP}:{port}` |
+| client -> advertise_urls  | OpenAPI broadcast addresses, displayed in cluster node list in console, format: `{protocol}://{IP/domain}:{port}` |
+| client -> certificate     | OpenAPI certificate information list                         |
+| gateway                   | Forwarding agent core program configuration information      |
+| gateway -> listen_urls    | Forwarding agent core program listening addresses, format: `{protocol}://{IP}:{port}` |
+| gateway -> advertise_urls | Forwarding agent core program broadcast addresses, displayed in cluster node list in console, format: `{protocol}://{IP/domain}:{port}` |
+| peer                      | Raft node configuration information for Raft cluster node configuration synchronization, joining or leaving cluster operations communication |
+| peer -> listen_urls       | Raft node listening addresses, format: `{protocol}://{IP}:{port}` |
+| peer -> advertise_urls    | Raft node broadcast addresses, format: `{protocol}://{IP/domain}:{port}` |
+| peer -> certificate       | Raft node certificate information list                       |
 
-3. Run Docker container and mount configuration file `config.yml`
+3. Run the Docker container and mount the `config.yml` configuration file
 
 ```
 docker run -td  -p 8099:8099 -p 9400:9400 -p 9401:9401 --privileged=true \
@@ -1154,83 +1187,29 @@ docker run -td  -p 8099:8099 -p 9400:9400 -p 9401:9401 --privileged=true \
 --name=apinto_node  eolinker/apinto-gateway:latest ./start.sh
 ```
 
-#### Build API Gateway Cluster
+#### Build an API Gateway Cluster
 
-1. Deploy a new node on another server following the **deployment steps** above
+1. Deploy a new node on another server following the above **Deployment Steps**.
 
-2. After deployment, enter the Docker container of any node (this step can be ignored for **installation package deployment**)
+2. After deployment, enter any node's Docker container (**Package Installation** can skip this step).
 
 ```
 docker exec -it apinto_node bash
 ```
 
-3. Execute the join cluster command
+3. Execute the command to join the cluster
 
 ```
 ./apinto join -addr {IP}:{port}
 ```
 
-In the above command, values within `{}` are variables and need to be replaced with actual values.
+In the above command, `{}` represents variables, which need to be replaced with actual values based on the situation.
 
 - IP: Server IP
-- Port number: Raft node communication port number in `config.yml` under the `peer` configuration section
+- Port: Raft node communication port, under the `peer` configuration in `config.yml`
 
-An example is shown below:
+Example:
 
 ```
 ./apinto join -addr 172.18.189.72:9401
 ```
-
-## Configure InfluxDB
-
-### Initialize InfluxDB
-
-:::tip
-
-The one-click deployment script installs the InfluxDB database by default. After deployment, the access address of InfluxDB will be printed, as shown in the image below:
-
-![](images/2024-10-29-02-19-29.png)
-
-:::
-
-1. Open the InfluxDB address in a browser.
-
-![](images/2024-10-29-02-20-04.png)
-
-2. Fill in the initialization information, including username, password, organization name, and Bucket name.
-
-:::warning
-Here, fill `apipark` for `Organization Name` and `apinto` for `Bucket Name`.
-:::
-
-![](images/2024-10-29-02-20-19.png)
-
-### Create API Tokens
-
-:::tip
-
-InfluxDB's API Tokens are tokens used for authentication and authorization, allowing users and applications to securely access InfluxDB's data and functionalities. Their main functions are as follows:
-
-1. **Access Control**: API Tokens can be used to control who can access data in the InfluxDB database. Each token can be associated with different permission levels, restricting access to specific databases, organizations, or resources.
-2. **Read/Write Permissions**: API Tokens can distinguish between read and write permissions. You can create read-only tokens, write-only tokens, or tokens with read and write permissions, thus controlling the operational capabilities of different users or applications.
-3. **Secure Communication**: API Tokens can work together with HTTPS to ensure that communication with InfluxDB is encrypted and secure, preventing unauthorized access and data leaks.
-4. **Multi-User Management**: In multi-user or multi-tenant environments, API Tokens allow generating different tokens for each user or application, and assigning different permissions as needed.
-5. **Audit and Tracking**: Via API Tokens, it is possible to track which users or applications accessed which data and when, facilitating logging and security auditing.
-
-:::
-
-1. Once on the InfluxDB web page, select `API Tokens`.
-
-![](images/2024-10-29-02-20-33.png)
-
-2. Generate an `All Access API Token`.
-
-![](images/2024-10-29-02-20-40.png)
-
-3. Enter description information and click `SAVE`.
-
-![](images/2024-10-29-02-20-47.png)
-
-4. Copy the generated `API Token`, which will be needed later when [setting up APIPark data source](system_setting/data_source.md).
-
-![](images/2024-10-29-02-20-59.png)

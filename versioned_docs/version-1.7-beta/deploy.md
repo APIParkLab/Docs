@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -209,16 +209,25 @@ services:
       - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
       - REDIS_PWD={REDIS_PWD}                         # Redis密码
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
-  influxdb2:
+      - Init=true
+      - InfluxdbToken={INFLUXDB_TOKEN}
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={INFLUXDB_TOKEN}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -361,12 +370,10 @@ services:
     container_name: apipark-apinto
     privileged: true
     restart: always
-    command: 
-      - ./start.sh
     ports:
-      - "8099:8099"
-      - "9400:9400"
-      - "9401:9401"
+      - "18099:8099"
+      - "19400:9400"
+      - "19401:9401"
     volumes:
       - /var/lib/apipark/apinto/data:/var/lib/apinto
       - /var/lib/apipark/apinto/log:/var/log/apinto
@@ -380,6 +387,7 @@ networks:
       driver: default
       config:
         - subnet: 172.100.0.0/24
+
 ```
 
 上述配置中，使用 "{}" 包裹的均为变量，相关变量说明如下：
@@ -387,6 +395,7 @@ networks:
 - **MYSQL_PWD：**mysql数据库root用户初始化密码
 - **REDIS_PWD：**redis密码
 - **ADMIN_PASSWORD：**APIPark Admin账号初始密码
+- **INFLUXDB_TOKEN：**InfluxDB 初始化Token
 
 替换后配置示例如下：
 
@@ -412,7 +421,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -436,16 +445,25 @@ services:
       - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
       - REDIS_PWD=123456                         # Redis密码
       - ADMIN_PASSWORD=12345678
-  influxdb2:
+      - Init=true
+      - InfluxdbToken=dQ9>fK6&gJ
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=dQ9>fK6&gJ
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -588,12 +606,10 @@ services:
     container_name: apipark-apinto
     privileged: true
     restart: always
-    command: 
-      - ./start.sh
     ports:
-      - "8099:8099"
-      - "9400:9400"
-      - "9401:9401"
+      - "18099:8099"
+      - "19400:9400"
+      - "19401:9401"
     volumes:
       - /var/lib/apipark/apinto/data:/var/lib/apinto
       - /var/lib/apipark/apinto/log:/var/log/apinto
@@ -607,7 +623,6 @@ networks:
       driver: default
       config:
         - subnet: 172.100.0.0/24
-
 ```
 
 5. 启动APIPark
@@ -655,7 +670,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -679,16 +694,25 @@ services:
       - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
       - REDIS_PWD={REDIS_PWD}                         # Redis密码
       - ADMIN_PASSWORD={ADMIN_PASSWORD}
-  influxdb2:
+      - Init=true
+      - InfluxdbToken={INFLUXDB_TOKEN}
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN={INFLUXDB_TOKEN}
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -833,6 +857,7 @@ networks:
       driver: default
       config:
         - subnet: 172.100.0.0/24
+
 ```
 
 上述配置中，使用 "{}" 包裹的均为变量，相关变量说明如下：
@@ -840,6 +865,7 @@ networks:
 - **MYSQL_PWD：**mysql数据库root用户初始化密码
 - **REDIS_PWD：**redis密码
 - **ADMIN_PASSWORD：**APIPark Admin账号初始密码
+- **INFLUXDB_TOKEN：**InfluxDB 初始化Token
 
 替换后配置示例如下：
 
@@ -865,7 +891,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.7.1-beta
+    image: apipark/apipark:v1.7.3-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -889,16 +915,25 @@ services:
       - REDIS_ADDR=apipark-redis:6379           #Redis集群地址 多个用,隔开
       - REDIS_PWD=123456                         # Redis密码
       - ADMIN_PASSWORD=12345678
-  influxdb2:
+      - Init=true
+      - InfluxdbToken=dQ9>fK6&gJ
+  apipark-influxdb:
     image: influxdb:2.6
     privileged: true
     restart: always
-    container_name: influxdb2
-    hostname: influxdb2
+    container_name: apipark-influxdb
+    hostname: apipark-influxdb
     ports:
       - "8086:8086"
     volumes:
       - /var/lib/apipark/influxdb2:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Key123qaz
+      - DOCKER_INFLUXDB_INIT_ORG=apipark
+      - DOCKER_INFLUXDB_INIT_BUCKET=apinto
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=dQ9>fK6&gJ
+      - DOCKER_INFLUXDB_INIT_MODE=setup
     networks:
       - apipark
   apipark-redis:
@@ -1180,59 +1215,3 @@ docker exec -it apinto_node bash
 ```
 ./apinto join -addr 172.18.189.72:9401
 ```
-
-
-## 配置InfluxDB
-
-### 初始化InfluxDB
-
-:::tip
-
-一键部署脚本默认安装InfluxDB数据库，部署完成后，会打印InfluxDB的访问地址，如下图：
-
-![](images/2024-10-29-02-19-29.png)
-
-:::
-
-1. 在浏览器打开InfluxDB地址。
-
-![](images/2024-10-29-02-20-04.png)
-
-2. 填写初始化信息，包括用户名、密码、组织名称，Bucket名称。
-
-:::warning
-此处的 `Organization Name` 填 `apipark` ，`Bucket Name` 填 `apinto`。
-:::
-
-![](images/2024-10-29-02-20-19.png)
-
-### 新建API Tokens
-
-:::tip
-
-InfluxDB 的 API Tokens 是用于认证和授权的令牌，允许用户和应用程序安全地访问 InfluxDB 的数据和功能。它们的主要作用如下：
-
-1. **访问控制**：API Tokens 可以用来控制谁可以访问 InfluxDB 数据库中的数据。每个令牌可以关联不同的权限级别，限制对特定数据库、组织或资源的访问。
-2. **读写权限**：API Tokens 可以区分读和写权限。你可以创建只读令牌、只写令牌或具有读写权限的令牌，从而控制不同用户或应用程序的操作能力。
-3. **安全通信**：API Tokens 可以与 HTTPS 协同工作，确保与 InfluxDB 的通信是加密和安全的，防止未经授权的访问和数据泄露。
-4. **多用户管理**：在多用户或多租户环境中，API Tokens 允许为每个用户或应用程序生成不同的令牌，并根据需求分配不同的权限。
-5. **审计和追踪**：通过 API Tokens，可以追踪哪些用户或应用程序在何时访问了哪些数据，便于进行日志记录和安全审计。
-
-:::
-
-1. 进入InfluxDB浏览器页面后，选中`API Tokens`。
-
-![](images/2024-10-29-02-20-33.png)
-
-2. 生成 `All Access API Token`。
-
-![](images/2024-10-29-02-20-40.png) 
-
-3. 输入描述信息后，点击`SAVE`。
-
-![](images/2024-10-29-02-20-47.png)
-
-4. 将生成的`API Token`复制，后续在[配置APIPark数据源](system_setting/data_source.md)时需要用到。
-
-![](images/2024-10-29-02-20-59.png)
-
