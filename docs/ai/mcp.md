@@ -12,7 +12,8 @@ Anthropic 于 2024 年底推出了模型上下文协议（MCP）。作为一项�
 
 APIPark 提供系统级别 MCP 服务和服务级别 MCP 服务，支持 AI Agent、MCP Host、MCP Client 等工具，以及 Claude、Cursor、Cline、Dify 等平台的无缝调用。MCP（Model Context Protocol，模型上下文协议） 是一种标准化协议，旨在实现 AI 模型、服务与客户端之间的高效通信与数据交互。
 通过 APIPark 的 MCP Server，任何支持 MCP 协议的客户端均可快速接入其生态系统，实现互操作性、可扩展性和简化的工作流程。这使得开发者和企业能够利用 APIPark 强大的基础设施，以最小的集成成本构建、管理和部署 AI 驱动的解决方案。
-系统级MCP Service
+
+## 系统级MCP Service
 系统级别MCP（多云平台）接口提供了一个统一的、标准化的访问机制，用于访问平台上所有公开可用的服务。该功能旨在简化服务集成，实现在多样化服务之间的无缝交互，非常适合构建多模态智能体和自动化工作流程。
 
 ![](images/2025-04-17/407d7295fd85a1babf4766765288cd0054720c853579f9a3c4f6a1dd7b9bd19b.png)  
@@ -21,8 +22,16 @@ APIPark 提供系统级别 MCP 服务和服务级别 MCP 服务，支持 AI Agen
 - service_list：此工具用于获取 APIPark 中已注册服务的列表。每个服务包含其唯一标识（service ID）、名称、描述及包含的 API 列表等关键信息。支持通过关键词进行模糊搜索，以便快速缩小查找范围。在获得某个服务的 ID 后，可以调用 openapi_document 工具来获取该服务的 OpenAPI 文档，以便后续调用其提供的 API 接口。
 - openapi_document：此工具用于获取指定服务的 OpenAPI 接口文档。返回内容支持 OpenAPI v2 与 v3 两种规范格式。通过传入服务 ID，可以查看该服务的所有 API 定义、参数结构、请求方式等详细信息，为后续构造请求做准备。
 - invoke_api：此工具用于直接调用指定的 API 接口。调用前需根据该接口的 OpenAPI 文档构造必要的请求参数，如请求路径、方法、查询参数、请求头、请求体等。调用过程中无需传递认证信息，例如请求头中的 Authorization 字段不需要提供。
-以 获取当天天气信息 作为场景使用示例，AI Agent调用流程如下：
+
+以 **获取当天天气信息** 作为场景使用示例，AI Agent调用流程如下：
+
 ![](images/2025-04-17/be8e4a71fe0b95ec8daee0b547c01ace8b6743b177ae4ee656fc8b0387d8d128.png)  
+
+## 消费者级 MCP Service
+消费者级 MCP Service 的能力和系统级 MCP Service 一致，区别在于可调用的 API 服务能力范围。 消费者级在通过MCP查询和请求接口的时候，只能调用该消费者已订阅服务的接口。
+该功能提供更加安全和权限收敛的 MCP 调用模式，便于各团队可根据消费者权限情况，通过统一的 MCP Service 调用拥有权限的 API 能力。
+![](images/2025-07-24/7821b76572794cb24c30426021394852a26e813e9e6bc0d708c68691f1b6d1d6.png)  
+
 
 ## 服务级MCP Service
 服务级别 MCP（Model Context Protocol）为 APIPark 提供了一种高效、标准化的方式，用于将服务与 AI Agent 及其他支持 MCP 协议的工具无缝集成。以下为主要功能：
