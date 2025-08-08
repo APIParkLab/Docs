@@ -253,6 +253,8 @@ services:
     restart: always
     ports:
       - 3100:3100
+    volumes:
+      - /var/lib/apipark/loki:/tmp/loki
     entrypoint:
       - sh
       - -euc
@@ -488,6 +490,8 @@ services:
     restart: always
     ports:
       - 3100:3100
+    volumes:
+      - /var/lib/apipark/loki:/tmp/loki
     entrypoint:
       - sh
       - -euc
@@ -737,6 +741,8 @@ services:
     restart: always
     ports:
       - 3100:3100
+    volumes:
+      - /var/lib/apipark/loki:/tmp/loki
     entrypoint:
       - sh
       - -euc
@@ -957,6 +963,8 @@ services:
     restart: always
     ports:
       - 3100:3100
+    volumes:
+      - /var/lib/apipark/loki:/tmp/loki
     entrypoint:
       - sh
       - -euc
