@@ -62,3 +62,22 @@
     padding: 1rem 2rem;
     width: 100%
 }
+
+/* 广告弹窗全局样式优化 */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* 确保弹窗在所有元素之上 */
+.ad-modal-overlay {
+    z-index: 10000 !important;
+}
+
+/* 防止弹窗内容被其他元素遮挡 */
+.navbar {
+    z-index: 1000;
+}
+
+.footer {
+    z-index: 100;
+}

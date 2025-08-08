@@ -1,0 +1,212 @@
+/* 遮罩层 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 弹窗主体 */
+.modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.8) translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.modalShow {
+  transform: scale(1) translateY(0);
+}
+
+/* 关闭按钮 */
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  z-index: 10;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* 内容区域 */
+.content {
+  padding: 0;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--ifm-color-primary), var(--ifm-color-primary-light));
+  /* 优化容器显示 */
+  position: relative;
+  /* 确保高质量渲染 */
+  will-change: transform;
+  /* 防止模糊 */
+  transform: translateZ(0);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 优化图片显示质量 */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  /* 确保图片清晰度 */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* 防止图片模糊 */
+  transform: translateZ(0);
+  /* 优化文字渲染 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.textContent {
+  padding: 30px;
+  text-align: center;
+}
+
+.title {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  line-height: 1.3;
+}
+
+.description {
+  margin: 0 0 25px 0;
+  font-size: 16px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.actionButton {
+  background: linear-gradient(135deg, var(--ifm-color-primary), var(--ifm-color-primary-light));
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(30, 86, 227, 0.3);
+}
+
+.actionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(30, 86, 227, 0.4);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+}
+
+/* 暗色主题适配 */
+[data-theme='dark'] .modal {
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+[data-theme='dark'] .closeButton {
+  color: var(--ifm-font-color-base);
+}
+
+[data-theme='dark'] .closeButton:hover {
+  background-color: var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .description {
+  color: var(--ifm-font-color-secondary);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .textContent {
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
+  
+  .description {
+    font-size: 14px;
+  }
+  
+  .imageContainer {
+    height: 150px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.textContent > * {
+  animation: slideInUp 0.5s ease forwards;
+}
+
+.title {
+  animation-delay: 0.1s;
+}
+
+.description {
+  animation-delay: 0.2s;
+}
+
+.actionButton {
+  animation-delay: 0.3s;
+}

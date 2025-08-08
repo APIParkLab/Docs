@@ -1,0 +1,79 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="400" height="200" fill="url(#bgGradient)" rx="12"/>
+  
+  <!-- 装饰性网格 -->
+  <g opacity="0.1">
+    <line x1="0" y1="50" x2="400" y2="50" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="100" x2="400" y2="100" stroke="white" stroke-width="1"/>
+    <line x1="0" y1="150" x2="400" y2="150" stroke="white" stroke-width="1"/>
+    <line x1="100" y1="0" x2="100" y2="200" stroke="white" stroke-width="1"/>
+    <line x1="200" y1="0" x2="200" y2="200" stroke="white" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="200" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <!-- AI 大脑图标 -->
+  <g transform="translate(50, 60)">
+    <circle cx="40" cy="40" r="35" fill="none" stroke="white" stroke-width="3" opacity="0.8"/>
+    <path d="M15 40 Q25 25, 40 30 Q55 25, 65 40 Q55 55, 40 50 Q25 55, 15 40" fill="white" opacity="0.9"/>
+    <circle cx="30" cy="35" r="3" fill="#667eea"/>
+    <circle cx="50" cy="35" r="3" fill="#667eea"/>
+    <path d="M25 50 Q40 55, 55 50" stroke="#667eea" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- 连接线和节点 -->
+  <g opacity="0.8">
+    <line x1="130" y1="100" x2="180" y2="100" stroke="white" stroke-width="3"/>
+    <circle cx="130" cy="100" r="4" fill="white"/>
+    <circle cx="155" cy="100" r="3" fill="white"/>
+    <circle cx="180" cy="100" r="4" fill="white"/>
+  </g>
+  
+  <!-- GPT-5 文字 -->
+  <text x="220" y="80" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="url(#textGradient)" filter="url(#glow)">GPT-5</text>
+  
+  <!-- API 图标 -->
+  <g transform="translate(300, 70)">
+    <rect x="0" y="0" width="60" height="40" rx="8" fill="none" stroke="white" stroke-width="2" opacity="0.8"/>
+    <text x="30" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">API</text>
+    <circle cx="10" cy="10" r="2" fill="white"/>
+    <circle cx="50" cy="10" r="2" fill="white"/>
+    <circle cx="10" cy="30" r="2" fill="white"/>
+    <circle cx="50" cy="30" r="2" fill="white"/>
+  </g>
+  
+  <!-- 装饰性星星 -->
+  <g fill="white" opacity="0.6">
+    <polygon points="380,30 382,36 388,36 383,40 385,46 380,42 375,46 377,40 372,36 378,36" />
+    <polygon points="30,170 31,174 35,174 32,177 33,181 30,178 27,181 28,177 25,174 29,174" />
+    <polygon points="350,160 351,163 354,163 352,165 353,168 350,166 347,168 348,165 346,163 349,163" />
+  </g>
+  
+  <!-- 底部文字 -->
+  <text x="200" y="130" font-family="Arial, sans-serif" font-size="14" fill="white" text-anchor="middle" opacity="0.9">统一大语言模型接口</text>
+  <text x="200" y="150" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" opacity="0.8">更好的价格 · 更好的吞吐量</text>
+  
+  <!-- 优惠标签 -->
+  <g transform="translate(320, 20)">
+    <rect x="0" y="0" width="70" height="25" rx="12" fill="#ff6b6b" opacity="0.9"/>
+    <text x="35" y="16" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white" text-anchor="middle">注册送¥3</text>
+  </g>
+</svg>
