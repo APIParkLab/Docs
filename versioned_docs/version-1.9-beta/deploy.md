@@ -84,7 +84,7 @@ version: 2
 #  dir: /etc/apinto/cert
 client:
   advertise_urls: # open api 服务的广播地址
-    - http://{IP}:9400
+    - http://{IP}:19400
   listen_urls: # open api 服务的监听地址
     - http://0.0.0.0:9400
   #certificate:  # 证书配置，允许使用ip的自签证书
@@ -92,8 +92,8 @@ client:
   #    key: server.key
 gateway:
   advertise_urls: # 转发服务的广播地址
-    - http://{IP}:8099
-    - https://{IP}:8099
+    - http://{IP}:18099
+    - https://{IP}:18099
   listen_urls: # 转发服务的监听地址
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
@@ -101,7 +101,7 @@ peer: # 集群间节点通信配置信息
   listen_urls: # 节点监听地址
     - http://0.0.0.0:9401
   advertise_urls: # 节点通信广播地址
-    - http://{IP}:9401
+    - http://{IP}:19401
   #certificate:  # 证书配置，允许使用ip的自签证书
   #  - cert: server.pem
   #    key: server.key
@@ -115,7 +115,7 @@ version: 2
 #  dir: /etc/apinto/cert
 client:
   advertise_urls: # open api 服务的广播地址
-    - http://172.18.65.22:9400
+    - http://172.18.65.22:19400
   listen_urls: # open api 服务的监听地址
     - http://0.0.0.0:9400
   #certificate:  # 证书配置，允许使用ip的自签证书
@@ -123,8 +123,8 @@ client:
   #    key: server.key
 gateway:
   advertise_urls: # 转发服务的广播地址
-    - http://172.18.65.22:8099
-    - https://172.18.65.22:8099
+    - http://172.18.65.22:18099
+    - https://172.18.65.22:18099
   listen_urls: # 转发服务的监听地址
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
@@ -132,7 +132,7 @@ peer: # 集群间节点通信配置信息
   listen_urls: # 节点监听地址
     - http://0.0.0.0:9401
   advertise_urls: # 节点通信广播地址
-    - http://172.18.65.22:9401
+    - http://172.18.65.22:19401
   #certificate:  # 证书配置，允许使用ip的自签证书
   #  - cert: server.pem
   #    key: server.key
@@ -185,7 +185,7 @@ services:
     networks:
       - apipark
   apipark:
-    image: apipark/apipark:v1.9.0-beta
+    image: apipark/apipark:v1.9.6-beta
     container_name: apipark
     privileged: true
     restart: always
@@ -1116,7 +1116,7 @@ version: 2
 #  dir: /etc/apinto/cert
 client:
   advertise_urls: # open api 服务的广播地址
-    - http://{IP}:9400
+    - http://{IP}:19400
   listen_urls: # open api 服务的监听地址
     - http://0.0.0.0:9400
   #certificate:  # 证书配置，允许使用ip的自签证书
@@ -1124,8 +1124,8 @@ client:
   #    key: server.key
 gateway:
   advertise_urls: # 转发服务的广播地址
-    - http://{IP}:8099
-    - https://{IP}:8099
+    - http://{IP}:18099
+    - https://{IP}:18099
   listen_urls: # 转发服务的监听地址
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
@@ -1133,7 +1133,7 @@ peer: # 集群间节点通信配置信息
   listen_urls: # 节点监听地址
     - http://0.0.0.0:9401
   advertise_urls: # 节点通信广播地址
-    - http://{IP}:9401
+    - http://{IP}:19401
   #certificate:  # 证书配置，允许使用ip的自签证书
   #  - cert: server.pem
   #    key: server.key
@@ -1147,7 +1147,7 @@ version: 2
 #  dir: /etc/apinto/cert
 client:
   advertise_urls: # open api 服务的广播地址
-    - http://172.18.65.22:9400
+    - http://172.18.65.22:19400
   listen_urls: # open api 服务的监听地址
     - http://0.0.0.0:9400
   #certificate:  # 证书配置，允许使用ip的自签证书
@@ -1155,8 +1155,8 @@ client:
   #    key: server.key
 gateway:
   advertise_urls: # 转发服务的广播地址
-    - http://172.18.65.22:8099
-    - https://172.18.65.22:8099
+    - http://172.18.65.22:18099
+    - https://172.18.65.22:18099
   listen_urls: # 转发服务的监听地址
     - https://0.0.0.0:8099
     - http://0.0.0.0:8099
@@ -1164,7 +1164,7 @@ peer: # 集群间节点通信配置信息
   listen_urls: # 节点监听地址
     - http://0.0.0.0:9401
   advertise_urls: # 节点通信广播地址
-    - http://172.18.65.22:9401
+    - http://172.18.65.22:19401
   #certificate:  # 证书配置，允许使用ip的自签证书
   #  - cert: server.pem
   #    key: server.key
@@ -1190,7 +1190,7 @@ peer: # 集群间节点通信配置信息
 3. 运行Docker容器，并挂载配置文件`config.yml`
 
 ```
-docker run -td  -p 8099:8099 -p 9400:9400 -p 9401:9401 --privileged=true \
+docker run -td  -p 18099:8099 -p 19400:9400 -p 19401:9401 --privileged=true \
 -v /var/lib/apinto/data:/var/lib/apinto \
 -v /var/lib/apinto/log:/var/log/apinto \
 -v ${PWD}/config.yml:/etc/apinto/config.yml \
@@ -1221,6 +1221,6 @@ docker exec -it apinto_node bash
 示例如下
 
 ```
-./apinto join -addr 172.18.189.72:9401
+./apinto join -addr 172.18.189.72:19401
 ```
 
