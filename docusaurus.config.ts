@@ -63,6 +63,13 @@ const config: Config = {
         anonymizeIP: true,
       },
     ],
+    [
+      '@docusaurus/plugin-vercel-analytics',
+      {
+        debug: false,
+        mode: 'auto',
+      },
+    ],
   ],
   themes: [
     // ... Your other themes.
